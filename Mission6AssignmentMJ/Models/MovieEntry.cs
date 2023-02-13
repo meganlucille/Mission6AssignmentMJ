@@ -25,22 +25,13 @@ namespace Mission6AssignmentMJ.Models
         public string Director { get; set; }
 
         [Required]
-        [Display(Name = "Rating")]
-        [EnumDataType(typeof(MovieRating))]
-        public MovieRating Rating { get; set; }
+        public string Rating { get; set; }
 
         public bool Edited { get; set; }
 
-        public int LentTo { get; set; }
+        public string LentTo { get; set; }
 
         [StringLength(25)]
         public string Notes { get; set; }
-    }
-    public enum MovieRating
-    {
-        G,
-        PG,
-        PG_13,
-        R
     }
 }
