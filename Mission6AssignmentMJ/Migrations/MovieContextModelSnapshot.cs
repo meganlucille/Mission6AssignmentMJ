@@ -15,15 +15,70 @@ namespace Mission6AssignmentMJ.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.32");
 
+            modelBuilder.Entity("Mission6AssignmentMJ.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Family"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Horror"
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryID = 5,
+                            CategoryName = "Drama"
+                        },
+                        new
+                        {
+                            CategoryID = 6,
+                            CategoryName = "Television"
+                        },
+                        new
+                        {
+                            CategoryID = 7,
+                            CategoryName = "VHS"
+                        },
+                        new
+                        {
+                            CategoryID = 8,
+                            CategoryName = "Misc"
+                        });
+                });
+
             modelBuilder.Entity("Mission6AssignmentMJ.Models.MovieEntry", b =>
                 {
                     b.Property<int>("EntryID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -52,13 +107,15 @@ namespace Mission6AssignmentMJ.Migrations
 
                     b.HasKey("EntryID");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("MovieEntries");
 
                     b.HasData(
                         new
                         {
                             EntryID = 1,
-                            Category = "Action/Adventure",
+                            CategoryID = 1,
                             Director = "Tim Burton",
                             Edited = true,
                             LentTo = "Dave",
@@ -70,7 +127,7 @@ namespace Mission6AssignmentMJ.Migrations
                         new
                         {
                             EntryID = 2,
-                            Category = "Family",
+                            CategoryID = 2,
                             Director = "Ron Clements",
                             Edited = false,
                             LentTo = "Molly",
@@ -82,7 +139,7 @@ namespace Mission6AssignmentMJ.Migrations
                         new
                         {
                             EntryID = 3,
-                            Category = "Horror",
+                            CategoryID = 3,
                             Director = "Ruben Fleischer",
                             Edited = false,
                             LentTo = "",
@@ -91,6 +148,15 @@ namespace Mission6AssignmentMJ.Migrations
                             Title = "Zombieland",
                             Year = (short)2009
                         });
+                });
+
+            modelBuilder.Entity("Mission6AssignmentMJ.Models.MovieEntry", b =>
+                {
+                    b.HasOne("Mission6AssignmentMJ.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
